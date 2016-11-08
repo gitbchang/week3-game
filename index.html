@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hangman - Guess the Rainbow (colors)</title>
+</head>
+<body>
+	<h1>Hangman - Colors</h1>
+	
+	<div id="gameText">
+		<h2>Press any key to get started!</h2>
+	</div>
+
+	<script type="text/javascript">
+		//DECLARE ALL VARIABLES
+		var winCount = 0; //Win Counter
+		var lives = 12;  //Total Lives, wrong guess reduces this by 1
+		var colorChoice = ["red"]; 
+		// var colorChoice = ["red", "orange", "yellow", "green", "blue", "purple", "black", "white"]; 
+		var guess; //guess
+		var incorrectGuess = []; //Stored guesses
+
+		// var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+  //       'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+  //       't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+
+		
+		
+		
+	//   PRESS ANY KEY TO START
+		document.onkeyup = function(event) {
+			//convert user guess to lower case
+			var userGuess = String.fromCharCode(event.keyCode).toLowerCase(); 
+
+			//choose a random color from colorChoice array
+			var secretWord = colorChoice[Math.floor(Math.random() * colorChoice.length)];
+
+
+
+			if (secretWord === 'red') {
+				secretWord = secretWord.replace("red", "- - -");
+				console.log(secretWord);
+			}
+
+
+
+			 var html = "<p>wins: " + winCount + "</p>"  +
+			 "<p>THE WORD: " + secretWord + "</p>";
+
+			document.querySelector("#gameText").innerHTML = html;
+
+
+
+
+
+		}
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
