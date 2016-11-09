@@ -1,68 +1,139 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Hangman - Guess the Rainbow (colors)</title>
-</head>
-<body>
-	<h1>Hangman - Colors</h1>
-	
-	<div id="gameText">
-		<h2>Press any key to get started!</h2>
-	</div>
-
-	<script type="text/javascript">
-		//DECLARE ALL VARIABLES
-		var winCount = 0; //Win Counter
-		var lives = 12;  //Total Lives, wrong guess reduces this by 1
-		var colorChoice = ["red"]; 
-		// var colorChoice = ["red", "orange", "yellow", "green", "blue", "purple", "black", "white"]; 
-		var guess; //guess
-		var incorrectGuess = []; //Stored guesses
-
-		// var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
-  //       'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
-  //       't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
-
+	<head>
+		<title>Hangman - Guess the Rainbow (colors)</title>
+		<script  src="https://code.jquery.com/jquery-3.1.1.js"
+		integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+		crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<h1>Hangman - Colors</h1>
+		<h2>Press "1" to get started!</h2>
+		<div id="gameText">
+			
+		</div>
+		<script type="text/javascript">
+			//DECLARE ALL VARIABLES
+							var winCount; 				//Win Counter
+							var lives;  				//Total Lives, wrong guess reduces this by 1
+			//var colorChoice = ["red"];
+			var colorChoice = ["red", "orange", "yellow", "green", "blue", "purple", "black", "white"];
+			
+				var lettersGuessed = []; 	// Stored all past guesses
+							var newGame;		// Start a new game
+					var hiddenWord = [];  		// Store hidden word symbolized with dashes here
+							var secretWord;				// Word that the user will guess
+			var secretWordArray = [];
+			
+		//  choose a random color from colorChoice array. 
+		function secretWordChoice() {
+			secretWord = colorChoice[Math.floor(Math.random() * colorChoice.length)];
+			//Breaks the letters of the color up in an array
+			secretWordArray = secretWord.split("");
+			console.log("This is the random color: " + secretWord);
+		}
 		
 		
+		// Set all beginning variables to start a new game
+		function reset() {
+		winCount = 0;
+		lives = 12;
+		lettersGuessed = [];
+		newGame = true;
+		}
 		
-	//   PRESS ANY KEY TO START
-		document.onkeyup = function(event) {
-			//convert user guess to lower case
-			var userGuess = String.fromCharCode(event.keyCode).toLowerCase(); 
-
-			//choose a random color from colorChoice array
-			var secretWord = colorChoice[Math.floor(Math.random() * colorChoice.length)];
-
-
-
-			if (secretWord === 'red') {
-				secretWord = secretWord.replace("red", "- - -");
-				console.log(secretWord);
+		function winorlose() {
+			
+			if(lives < 1){
+				alert("You have no more lives. GAME OVER");
+				newGame = false;
 			}
+			if ((hiddenWord === secretWordArray) && (lives > 0)) {
+				alert("You Win!");
+				reset();
+			}
+		}
+		// Add a dash for every letter in the secret word
 
-
-
-			 var html = "<p>wins: " + winCount + "</p>"  +
-			 "<p>THE WORD: " + secretWord + "</p>";
-
-			document.querySelector("#gameText").innerHTML = html;
-
-
-
-
-
+		function dashReplace(){
+				for (var i = 0; i < secretWord.length; i++) {
+				hiddenWord.push("_");
+			}
 		}
 
+		function pushUserGuess(){
+							// Add letter to list of letters guessed
+				lettersGuessed.push(userGuess);
+		}
 
+		// Use indexOf,use Indexof +1
+			
+		//   CHECK IF LETTER IS IN THE SECRETWORD
+			document.onkeyup = function(event) {
+				
 
+				updateStats();
+				// Press 1 to start a new game
+				if (userGuess === 1){
+					secretWordChoice();
+					dashReplace();
+					reset();
+					updateStats();
+				}
 
+				else if((lives > 0) && (newGame = true) && (userGuess != 1)){
 
+					//convert user guess to lower case
+					var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+					console.log("Your last letter guessed: " + userGuess);
+					//Loop through the hidden word array to see if the letter is a match
+					for (var i = 0; i < hiddenWord.length; i++) {
+					
+					if (userGuess === secretWordArray[i]) {
+						console.log("This letter matches secret word");
+						hiddenWord[i] = userGuess;
+						console.log(hiddenWord);
+						console.log(lettersGuessed);
+						updateStats();
+					}
+					
+					
+					
+					
+				}
 
+						if (secretWord.indexOf(userGuess) === -1){
+						lives = lives-1;
+						console.log(lives);
+						updateStats();
+						
+					}
+				
+				}
 
-
-
-	</script>
-</body>
+				
+				
+			}
+			
+					//	HTML which will be injected into our div
+		var gameTextInput = $("#gameText");
+		function updateStats (){
+			$(gameTextInput).html("<div><p>Wins: " + winCount + "</p></div>" +
+				"<div><p>Lives:  " + lives + "</p></div>" +
+				"<div><p>YOUR WORD:  " + hiddenWord + "</p></div>" +
+				"<div><p>Letters Guessed:  " + lettersGuessed + "</p></div>");
+			// $(gameTextInput).html("<div><p>Lives:  " + lives + "</p></div>");
+			// $(gameTextInput).html("<div><p>Letters Guessed:  " + lettersGuessed + "</p></div>");
+		}
+		
+		
+		// var html = "<p>wins: " + winCount + "</p>"  +
+		// "<p>Remaining Lives: " + lives + "</p>" +
+		// "<p>THE WORD: " + hiddenWord + "</p>" +
+		// "<p>Letters Guessed: " + lettersGuessed + "</p>";
+		// document.querySelector("#gameText").innerHTML = html;
+		
+		
+		</script>
+	</body>
 </html>
