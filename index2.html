@@ -49,7 +49,7 @@
 		
 		function winorlose() {
 			
-			if(lives < 1){
+			if(lives === 0){
 				alert("You have no more lives. GAME OVER");
 				newGame = false;
 			}
@@ -70,18 +70,15 @@
 
 
 	document.onkeyup = function(event) {
-		// Add letter to list of letters guessed			
-		function pushUserGuess(){
-		
-			lettersGuessed.push(userGuess);
-			
 
 			
-		}
+
+	
 			//convert user guess to lower case
 			var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
 			console.log("Your last letter guessed: " + userGuess);
-
+			// Add letter to list of letters guessed			
+			lettersGuessed.push(userGuess);
 			if (userGuess == 1){
 					
 					updateStats();
@@ -97,22 +94,29 @@
 						console.log("This letter matches secret word");
 						hiddenWord[i] = userGuess;
 						console.log(hiddenWord);
-						pushUserGuess();
+						
+						
 						console.log(lettersGuessed);
 						
 					}
-					
+
 
 					
+
+					updateStats();
+					
+
 					
 				}
 
-				pushUserGuess();
+				
 
 
 			}
-
-
+			
+			winorlose();
+			// if this is -1, letter is not in word. subtract a life
+			console.log(secretWord.indexOf(userGuess));
 		}
 
 
@@ -138,6 +142,9 @@
 			// $(gameTextInput).html("<div><p>Letters Guessed:  " + lettersGuessed + "</p></div>");
 		}
 		
+		function pushGuesses() {
+			$("#guessSection").html("<p>Previous Guesses: " + lettersGuessed + "</p>");
+		}
 
 		</script>
 	</body>
