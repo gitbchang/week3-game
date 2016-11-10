@@ -17,7 +17,7 @@
 			<button type="button" id="startButton" class="btn btn-group-lg rainbow">Start</button>
 		</div>
 		
-		<h4>Press letter keys to guess</h4>
+		<h4>Press letter keys to start guessing</h4>
 		
 		
 			<div id="winSection"></div>
@@ -30,7 +30,7 @@
 
 		
 			//DECLARE ALL VARIABLES
-			var winCount; 				//Win Counter
+			var winCount = 0; 				//Win Counter
 			var lives;  				//Total Lives, wrong guess reduces this by 1
 			//var colorChoice = ["red"];
 			
@@ -52,7 +52,6 @@
 		secretWordChoice();
 		// Set all beginning variables to start a new game
 		function reset() {
-		winCount = 0;
 		lives = 5;
 		lettersGuessed = [];
 		newGame = true;
@@ -79,9 +78,19 @@
 
 
 			}
+			// not working correctly
 			if ((hiddenWord === secretWordArray) && (lives > 0)) {
 				alert("You Win!");
-				reset();
+				winCount++;
+				var winCont = confirm("Press OK to try again");
+				if(winCont === true){
+					secretWordChoice();
+					reset();
+					hiddenWordReset();
+					dashReplace();
+					updateStats();
+				}
+				
 			}
 		}
 		// Add a dash for every letter in the secret word
