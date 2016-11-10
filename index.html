@@ -7,11 +7,19 @@
 		crossorigin="anonymous"></script>
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	</head>
 	<body>
-		<h1>Hangman - Colors</h1>
-		<h2>Press "1" to get started!</h2>
 		<div class="container">
+		<h1 class="rainbow">Hangman - Colors</h1>
+		<h2>Press the "Start" button to play</h2>
+		<div>
+			<button type="button" id="startButton" class="btn btn-group-lg rainbow">Start</button>
+		</div>
+		
+		<h4>Press letter keys to guess</h4>
+		
+		
 			<div id="winSection"></div>
 			<div id="liveSection"></div>
 			<div id="secretWordSection"></div>
@@ -19,6 +27,8 @@
 			
 		</div>
 		<script type="text/javascript">
+
+		
 			//DECLARE ALL VARIABLES
 			var winCount; 				//Win Counter
 			var lives;  				//Total Lives, wrong guess reduces this by 1
@@ -93,12 +103,12 @@
 			console.log("Your last letter guessed: " + userGuess);
 			// Add letter to list of letters guessed			
 			lettersGuessed.push(userGuess);
-			if (userGuess == 1){
+			// if (userGuess == 1){
 					
-					updateStats();
-					reset();
-					console.log("I pressed 1");
-				}
+			// 		updateStats();
+			// 		reset();
+			// 		console.log("I pressed 1");
+			// 	}
 			// Thrown off if there are 2 of the same letter in the word. only logs the first letter	
 			if((lives > 0) && (newGame = true) && (userGuess !== 1)){
 
@@ -148,6 +158,13 @@
 
 
 			//	HTML which will be injected into our div
+
+		$("#startButton").click(updateStats);
+		
+		function buttonNewGame(){
+			updateStats();
+			reset();
+		}
 		
 		function updateStats (){
 
