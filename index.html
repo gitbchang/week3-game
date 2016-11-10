@@ -11,15 +11,15 @@
 	</head>
 	<body>
 		<div class="container">
-		<h1 class="rainbow">Hangman - Colors</h1>
-		<h2>Press the "Start" button to play</h2>
-		<div>
-			<button type="button" id="startButton" class="btn btn-group-lg rainbow">Start</button>
-		</div>
-		
-		<h4>Press letter keys to start guessing</h4>
-		
-		
+			<h1 class="rainbow">Hangman - Colors</h1>
+			<h2>Press the "Start" button to play</h2>
+			<div>
+				<button type="button" id="startButton" class="btn btn-group-lg rainbow">Start</button>
+			</div>
+			
+			<h4>Press letter keys to start guessing</h4>
+			
+			
 			<div id="winSection"></div>
 			<div id="liveSection"></div>
 			<div id="secretWordSection"></div>
@@ -27,21 +27,20 @@
 			
 		</div>
 		<script type="text/javascript">
-
 		
 			//DECLARE ALL VARIABLES
-			var winCount = 0; 				//Win Counter
-			var lives;  				//Total Lives, wrong guess reduces this by 1
+											var winCount = 0; 				//Win Counter
+											var lives;  				//Total Lives, wrong guess reduces this by 1
 			//var colorChoice = ["red"];
 			
 			var colorChoice = ["red", "orange", "yellow", "green", "blue", "purple", "black", "white"];
-			var lettersGuessed = []; 	// Stored all past guesses
-			var newGame;		// Start a new game
-			var hiddenWord = [];  		// Store hidden word symbolized with dashes here
-			var secretWord;				// Word that the user will guess
+					var lettersGuessed = []; 	// Stored all past guesses
+							var newGame;		// Start a new game
+							var hiddenWord = [];  		// Store hidden word symbolized with dashes here
+											var secretWord;				// Word that the user will guess
 			var secretWordArray = [];
 			
-		//  choose a random color from colorChoice array. 
+		//  choose a random color from colorChoice array.
 		function secretWordChoice() {
 			secretWord = colorChoice[Math.floor(Math.random() * colorChoice.length)];
 			//Breaks the letters of the color up in an array
@@ -52,12 +51,11 @@
 		secretWordChoice();
 		// Set all beginning variables to start a new game
 		function reset() {
-		lives = 5;
+		lives = 6;
 		lettersGuessed = [];
 		newGame = true;
 		}
 		reset();
-
 		function hiddenWordReset() {
 			hiddenWord = [];
 		}
@@ -75,53 +73,41 @@
 					updateStats();
 				}
 				newGame = false;
-
-
 			}
-			// not working correctly
-			if ((hiddenWord === secretWordArray) && (lives > 0)) {
-				alert("You Win!");
-				winCount++;
-				var winCont = confirm("Press OK to try again");
-				if(winCont === true){
-					secretWordChoice();
-					reset();
-					hiddenWordReset();
-					dashReplace();
-					updateStats();
+			// loop through hiddenWord array to find if there are dashes
+			for(var x = 0; x < hiddenWord.length; x++){
+					if (("_".indexOf(hiddenWord[x]) === -1) && (lives > 0)) {
+					alert("You Win!");
+					winCount++;
+					var winCont = confirm("Press OK to try again");
+					if(winCont === true){
+						secretWordChoice();
+						reset();
+						hiddenWordReset();
+						dashReplace();
+						updateStats();
 				}
 				
 			}
+			}
+
 		}
 		// Add a dash for every letter in the secret word
-
 		function dashReplace(){
 				for (var i = 0; i < secretWord.length; i++) {
 				hiddenWord.push("_");
 			}
 		}
 		dashReplace();
-
-
-
-
-	document.onkeyup = function(event) {
-
+		document.onkeyup = function(event) {
 			//convert user guess to lower case
 			var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
 			console.log("Your last letter guessed: " + userGuess);
-			// Add letter to list of letters guessed			
+						// Add letter to list of letters guessed
 			lettersGuessed.push(userGuess);
-			// if (userGuess == 1){
-					
-			// 		updateStats();
-			// 		reset();
-			// 		console.log("I pressed 1");
-			// 	}
-			// Thrown off if there are 2 of the same letter in the word. only logs the first letter	
+			// Thrown off if there are 2 of the same letter in the word. only logs the first letter
 			if((lives > 0) && (newGame = true) && (userGuess !== 1)){
-
-				for (var i = 0; i < hiddenWord.length; i++) {
+					for (var i = 0; i < hiddenWord.length; i++) {
 					
 					if (userGuess === secretWordArray[i]) {
 						console.log("This letter matches secret word");
@@ -132,21 +118,15 @@
 						console.log(lettersGuessed);
 						
 					}
-
-
 					
-
 					updateStats();
 					
-
-					
-				}
-
+				} // end of for loop
+				
+			} //end of if statement to test if newGame and lives are valid
 				
 
-
-			}
-			
+		
 			winorlose();
 			// if this is -1, letter is not in word. subtract a life
 			console.log("letter accuracy test: " + secretWord.indexOf(userGuess));
@@ -154,20 +134,10 @@
 			if((secretWord.indexOf(userGuess)) === -1) {
 				lives = (lives-1);
 				updateLives();
-
 			}
-
 			
 		}
-
-
-
-
-
-
-
-			//	HTML which will be injected into our div
-
+					//	HTML which will be injected into our div
 		$("#startButton").click(updateStats);
 		
 		function buttonNewGame(){
@@ -176,28 +146,24 @@
 		}
 		
 		function updateStats (){
-
 			$("#winSection").html("<p>Wins: " + winCount + "</p>");
 			$("#liveSection").html("<p>Lives: " + lives + "</p>");
 			$("#secretWordSection").html("<p>YOUR WORD: " + hiddenWord + "<p>");
-			$("#guessSection").html("<p>Previous Guesses: " + lettersGuessed + "</p>");
-
-			// $(gameTextInput).html("<div><p>Wins: " + winCount + "</p></div>" +
-			// 	"<div><p>Lives:  " + lives + "</p></div>" +
-			// 	"<div><p>YOUR WORD:  " + hiddenWord + "</p></div>" +
-			// 	"<div><p>Letters Guessed:  " + lettersGuessed + "</p></div>");
-			// $(gameTextInput).html("<div><p>Lives:  " + lives + "</p></div>");
-			// $(gameTextInput).html("<div><p>Letters Guessed:  " + lettersGuessed + "</p></div>");
-		}
-		
-		function pushGuesses() {
-			$("#guessSection").html("<p>Previous Guesses: " + lettersGuessed + "</p>");
-		}
-
-		function updateLives(){
-			$("#liveSection").html("<p>Lives: " + lives + "</p>");
-		}
-
-		</script>
-	</body>
-</html>
+					$("#guessSection").html("<p>Previous Guesses: " + lettersGuessed + "</p>");
+					// $(gameTextInput).html("<div><p>Wins: " + winCount + "</p></div>" +
+							// 	"<div><p>Lives:  " + lives + "</p></div>" +
+							// 	"<div><p>YOUR WORD:  " + hiddenWord + "</p></div>" +
+							// 	"<div><p>Letters Guessed:  " + lettersGuessed + "</p></div>");
+					// $(gameTextInput).html("<div><p>Lives:  " + lives + "</p></div>");
+					// $(gameTextInput).html("<div><p>Letters Guessed:  " + lettersGuessed + "</p></div>");
+				}
+				
+				function pushGuesses() {
+					$("#guessSection").html("<p>Previous Guesses: " + lettersGuessed + "</p>");
+				}
+				function updateLives(){
+					$("#liveSection").html("<p>Lives: " + lives + "</p>");
+				}
+			</script>
+		</body>
+	</html>
