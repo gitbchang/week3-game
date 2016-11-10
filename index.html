@@ -5,6 +5,8 @@
 		<script  src="https://code.jquery.com/jquery-3.1.1.js"
 		integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
 		crossorigin="anonymous"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	</head>
 	<body>
 		<h1>Hangman - Colors</h1>
@@ -129,7 +131,7 @@
 			winorlose();
 			// if this is -1, letter is not in word. subtract a life
 			console.log("letter accuracy test: " + secretWord.indexOf(userGuess));
-
+			// how to disregard this line of code if the userGuess = 1
 			if((secretWord.indexOf(userGuess)) === -1) {
 				lives = (lives-1);
 				updateLives();
