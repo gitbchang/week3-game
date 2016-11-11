@@ -142,7 +142,7 @@
 			} //end of if statement to test if newGame and lives are valid
 				
 		
-			winorlose();
+			
 			// if this is -1, letter is not in word. subtract a life
 			console.log("letter accuracy test: " + secretWord.indexOf(userGuess));
 			// how to disregard this line of code if the userGuess = 1
@@ -150,8 +150,9 @@
 				lives = (lives-1);
 				updateLives();
 			}
-			
+		winorlose();	
 		}
+		
 						//	HTML which will be injected into our div
 		$("#startButton").click(updateStats);
 		
