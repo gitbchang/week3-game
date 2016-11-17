@@ -1,3 +1,8 @@
+.jumbotron {
+	background-image: url(../images/rainbow.jpg);
+	background-size: cover;
+}	
+
 .rainbow:hover {
 -webkit-animation:rainbow 1s infinite;
 -ms-animation:rainbow 1s infinite;
